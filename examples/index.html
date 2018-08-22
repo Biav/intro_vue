@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Introdução ao Vue JS</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    </head>
+    <body>
+        <div id="app">
+            {{message}}
+            <p v-bind:title="titulo">
+                Paragrafo teste
+            </p>
+            <p v-if="condicao">Teste com IF</p>
+            <p v-for="registro in registros">{{ registro.titulo }}</p>
+            <button v-if="!clicou" v-on:click="trocarBotao">Salvar</button>
+            <button v-if="clicou" v-on:click="trocarBotao">Aguarde...</button>
+            <p>
+                <input type="text" v-model="usuario.nome">
+            </p>
+           Nome: {{usuario.nome}} 
+        </div>
+
+        <script>
+            var app = new Vue({
+                el: "#app",
+                data: {
+                    message: "Introdução ao Vue JS",
+                    titulo: "Novo titulo",
+                    condicao: true,
+                    registros: [
+                        {titulo: 'registro1'}, 
+                        {titulo: 'registro2'},
+                        {titulo: 'registro3'},
+                        {titulo: 'registro4'},
+                        {titulo: 'registro5'},
+                        {titulo: 'registro6'}
+                    ],
+                    clicou: false,
+                    usuario: {nome:""}
+                },
+                methods: {
+                   trocarBotao() {
+                       this.clicou = !this.clicou;
+                   } 
+                }
+            });
+        </script>
+    </body>
+</html>

@@ -7,19 +7,50 @@
     <body>
         <div id="app">
             {{message}}
-            <meu-titulo></meu-titulo>
+            <meu-titulo v-bind:titulo="texto"></meu-titulo>
+            <input type="text" v-model="texto">
+
+            <tabela-site v-bind:registros="registros"></tabela-site>
+
+            <p v-once>{{texto}}</p>
+            <p v-html="html"></p>
+
+            <p>{{ 25.892343 | tratarValor }}</p>
         </div>
 
         <script>
-
             Vue.component("meu-titulo",{
-                template: "<h2> Exemplo de componente"
+                props: ['titulo'],
+                template: "<h2> {{ titulo }} </h2>"
+            });
+
+            Vue.component("tabela-site",{
+               props: ['registros'],
+               template: `<table>` +
+                            `<tbody>` +
+                                `<tr v-for="registro in registros">` +
+                                    `<td v-for="item in registro">{{item}}</td>` +
+
+                                `</tr>` +
+                            `</tbody>` + 
+                         `</table>`
             });
 
             var app = new Vue({
                 el: "#app",
                 data: {
-                    message: "Componentes"
+                    message: "Componentes",
+                    texto: "Exemplo de texto",
+                    registros: [
+                        {nome: "Teste1", email: "teste1@gmail.com"},
+                        {nome: "Teste2", email: "teste2@gmail.com"}
+                    ],
+                    html: "<a href='#'>Esse é um link</a>"
+                },
+                filters: {
+                    tratarValor: function(valor) {
+                        return "R$ " + ((valor).toFixed(2)).replace(".",",");
+                    }
                 }
             });
         </script>
